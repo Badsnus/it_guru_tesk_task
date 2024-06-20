@@ -24,9 +24,11 @@ async def update_rates() -> None:
 
 
 @app.get('/api/rates')
-def get_exchange_rate(from_currency: str = Query(alias='from'),
-                      to_currency: str = Query(alias='to'),
-                      value: float = Query()):
-    return {
-
-    }
+async def get_exchange_rate(from_currency: str = Query(alias='from'),
+                            to_currency: str = Query(alias='to'),
+                            value: float = Query()):
+    try:
+        rate = await db.get_rates(from_currency + '_' + to_currency)
+        return {'rate': rate * value}
+    except TypeError:
+        return {'error': 'Invalid currency'}
