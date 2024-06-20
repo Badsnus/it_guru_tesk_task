@@ -29,7 +29,7 @@ async def get_exchange_rate(from_currency: str = Query(alias='from'),
                             value: float = Query(),
                             db: DB = Depends(get_db)) -> RateSchema | ExceptionSchema:
     try:
-        rate = await db.get_rates(from_currency + '_' + to_currency)
+        rate = await db.get_rates(from_currency, to_currency)
         return RateSchema(rate=rate * value)
     except TypeError:
         return ExceptionSchema(error='Invalid currency')
