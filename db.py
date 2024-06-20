@@ -17,4 +17,5 @@ class DB:
         for i in itertools.combinations(data['rates'].keys(), r=2):
             for a, b in (i, i[::-1]):
                 rates[a + '_' + b] = rates[a + '_RUB'] * rates['RUB_' + b]
-        print(rates)
+        for key, value in rates:
+            await self.client.set(key, value)
