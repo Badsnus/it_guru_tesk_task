@@ -10,7 +10,7 @@ class DB:
         self.client = redis.Redis(
             host=REDIS_HOST,
             port=REDIS_PORT,
-            # password=REDIS_PASSWORD,
+            password=REDIS_PASSWORD,
         )
 
     async def update_rates(self, data: dict) -> None:
