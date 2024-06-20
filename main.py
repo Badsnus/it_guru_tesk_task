@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 import aiohttp
@@ -15,9 +16,12 @@ db = DB()
 @repeat_every(seconds=60 * 60)  # 1 hour
 async def update_rates() -> None:
     async with aiohttp.ClientSession() as session:
+        # retry
         while (response := await session.get(API_URL)).status != 200:
-            data = json.loads(await response.text())
-            await db.update_data(data)
+            await asyncio.sleep(10)
+
+        data = json.loads(await response.text())
+        await db.update_data(data)
 
 
 @app.get('/api/rates')
