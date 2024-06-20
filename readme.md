@@ -1,5 +1,6 @@
 Тестовое Айти Гуру
+---
 
-
+---
 ТЗ:
-![img.png](https://cloud.mail.ru/public/FUNM/P5E8czkXv)
+![image](https://github.com/Badsnus/it_guru_tesk_task/assets/91815912/2fdabcf3-ce7f-4b45-a7cd-36718237abb1)
