@@ -8,7 +8,7 @@ class DB:
     def __init__(self):
         self.client = redis.Redis()
 
-    async def update_data(self, data: dict) -> None:
+    async def update_rates(self, data: dict) -> None:
         rates = {}
         for key, value in data['rates'].items():
             rates['RUB_' + key] = value
