@@ -1,17 +1,20 @@
 import itertools
+from typing import AsyncGenerator
 
 import redis.asyncio as redis
 from config import REDIS_HOST, REDIS_PASSWORD, REDIS_PORT
 
+pool = redis.ConnectionPool(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    password=REDIS_PASSWORD,
+)
+
 
 class DB:
 
-    def __init__(self):
-        self.client = redis.Redis(
-            host=REDIS_HOST,
-            port=REDIS_PORT,
-            password=REDIS_PASSWORD,
-        )
+    def __init__(self, pool: redis.ConnectionPool) -> None:
+        self.client = redis.Redis.from_pool(pool)
 
     async def update_rates(self, data: dict) -> None:
         rates = {}
@@ -28,3 +31,7 @@ class DB:
 
     async def get_rates(self, key: str) -> float:
         return float(await self.client.get(key))
+
+
+async def get_db() -> AsyncGenerator:
+    yield DB(pool)
